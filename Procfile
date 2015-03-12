@@ -1,0 +1,1 @@
+web: gunicorn ew_backend.wsgi --log-file -
