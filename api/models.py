@@ -47,7 +47,7 @@ class Shop(models.Model):
     identifier = models.CharField(max_length=255, blank=False, unique=True)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=CLOSE)
-    admin = models.ForeignKey(Customer, related_name="shop")
+    admin = models.ForeignKey(Customer, related_name="shop", blank=True)
 
     def __unicode__(self):
         return self.name
