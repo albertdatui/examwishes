@@ -34,18 +34,35 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Order
-		fields = ('id', 'message', 'photo', 'status', 'sender', 'receiver', 'product')
+		fields = (
+			'id',
+			'message',
+			'photo',
+			'status',
+			'sender',
+			'receiver',
+			'product',
+		)
+
 
 class ShopSerializer(serializers.HyperlinkedModelSerializer):
-	product = serializers.PrimaryKeyRelatedField(many=True, queryset=Shop.objects.all())
-	manager = serializers.PrimaryKeyRelatedField(many=True, queryset=Customer.objects.all())
-	admin = serializers.ReadOnlyField(source='admin.username')
+	product = serializers.HyperlinkedRelatedField(many=True, view_name='product-detail',read_only=True)
+	manager = serializers.HyperlinkedRelatedField(many=True, view_name='user-detail')
 
 	class Meta:
 		model = Shop
-		fields = ('name', 'identifier', 'description', 'status', 'admin', 'product', 'manager')
+		fields = (
+			'name',
+			'identifier',
+			'description',
+			'status',
+			'admin',
+			'product',
+			'manager',
+		)
 
-class ProductSerializer(serializers.ModelSerializer):
+
+class ProductSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Product
 		fields('id', 'name', 'description', 'videoURL', 'quantity', 'price', 'isPhotoRequired', 'shop')
