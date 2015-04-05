@@ -36,7 +36,6 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 		model = Order
 		fields = ('id', 'message', 'photo', 'status', 'sender', 'receiver', 'product')
 
-<<<<<<< HEAD
 class ShopSerializer(serializers.HyperlinkedModelSerializer):
 	product = serializers.PrimaryKeyRelatedField(many=True, queryset=Shop.objects.all())
 	manager = serializers.PrimaryKeyRelatedField(many=True, queryset=Customer.objects.all())
@@ -45,11 +44,8 @@ class ShopSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Shop
 		fields = ('name', 'identifier', 'description', 'status', 'admin', 'product', 'manager')
->>>>>>> db04213de3b43ef8cdfc7283399a0b988bd185db
 
-<<<<<<< HEAD
 class ProductSerializer(serializers.ModelSerializer):
->>>>>>> db04213de3b43ef8cdfc7283399a0b988bd185db
 	class Meta:
 		model = Product
 		fields('id', 'name', 'description', 'videoURL', 'quantity', 'price', 'isPhotoRequired', 'shop')
