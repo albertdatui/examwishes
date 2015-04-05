@@ -1,10 +1,14 @@
 venv
 staticfiles
 *.sqlite3
+*/migrations/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+
+# Mac OS
+*.DS_Store
 
 # C extensions
 *.so
