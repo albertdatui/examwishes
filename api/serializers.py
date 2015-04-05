@@ -36,12 +36,13 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 		model = Order
 		fields = (
 			'id',
-			'alias',
 			'message',
 			'photo',
 			'status',
 			'sender',
+			'sender_alias',
 			'receiver',
+			'receiver_alias',
 			'product',
 		)
 

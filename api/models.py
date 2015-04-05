@@ -22,12 +22,13 @@ class Order(models.Model):
         (PAID, 'Paid'),
 
     )
-    alias = models.CharField(max_length=255)
     message = models.TextField(blank=True)
     photo = models.URLField(blank=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PENDING)
     sender = models.ForeignKey(User, related_name="ordered")
+    sender_alias = models.CharField(max_length=255)
     receiver = models.ForeignKey(User, related_name="received")
+    receiver_alias = models.CharField(max_length=255)
     product = models.ForeignKey(Product, related_name="order")
     date = models.DateField(auto_now=True)
 
