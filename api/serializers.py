@@ -1,28 +1,61 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-#from v1.models import *
 from api.models import *
 
-class OrderSerializer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+	address = serializers.URLField(source='client.address')
+	phone = serializers.URLField(source='client.phone')
+
+	class Meta:
+		model = User
+		fields = (
+			'id',
+			'name',
+			'address',
+			'phone',
+			'email',
+			'password',
+			'groups',
+		)
+
+		write_only_fields = ('password',)
+
+	def create(self, validated_data):
+        client = Client.objects.create(**validated_data.get('client'))
+        # must remove the client data before creating user
+        del validated_data['client']
+        user = User.objects.create_user(**validated_data)
+        # establish the relationship
+        client.user = user
+        return user
+
+
+class OrderSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Order
 		fields = ('id', 'message', 'photo', 'status', 'sender', 'receiver', 'product')
 
-class ShopSerializer(serializers.ModelSerializer):
+<<<<<<< HEAD
+class ShopSerializer(serializers.HyperlinkedModelSerializer):
 	product = serializers.PrimaryKeyRelatedField(many=True, queryset=Shop.objects.all())
 	manager = serializers.PrimaryKeyRelatedField(many=True, queryset=Customer.objects.all())
 	admin = serializers.ReadOnlyField(source='admin.username')
+
 	class Meta:
 		model = Shop
 		fields = ('name', 'identifier', 'description', 'status', 'admin', 'product', 'manager')
+>>>>>>> db04213de3b43ef8cdfc7283399a0b988bd185db
 
+<<<<<<< HEAD
 class ProductSerializer(serializers.ModelSerializer):
-	#kalo gw gak salah inget, lu harus specify di sini buat nge-query image
+>>>>>>> db04213de3b43ef8cdfc7283399a0b988bd185db
 	class Meta:
 		model = Product
 		fields('id', 'name', 'description', 'videoURL', 'quantity', 'price', 'isPhotoRequired', 'shop')
 
-class ImageSerializer(serializers.ModelSerializer):
+
+class ImageSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Image
 		fields('id', 'name', 'image', 'product')
