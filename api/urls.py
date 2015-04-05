@@ -5,6 +5,10 @@ from api.views import *
 
 router = DefaultRouter(trailing_slash=False)
 
-# TODO: put urls
+router.register(
+    r'user',
+    UserViewSet,
+    base_name='user'
+)
 
 urlpatterns = router.urls

@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 
 class Client(models.Model):
     user = models.OneToOneField(
-        User, primary_key=True, related_name="customer")
+        User, primary_key=True, related_name="client")
     address = models.CharField(max_length=255)
+    phone = models.CharField(max_length=20)
 
     def __unicode__(self):
         return self.user.first_name
