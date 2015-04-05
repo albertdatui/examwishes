@@ -27,8 +27,8 @@ class Order(models.Model):
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PENDING)
     sender = models.ForeignKey(User, related_name="ordered")
     receiver = models.ForeignKey(User, related_name="received")
-    #productnya ilang
-    #boleh ditambah order date
+    product = models.ForeignKey(Product, related_name="order")
+
     def __unicode__(self):
         return self.pk
 
