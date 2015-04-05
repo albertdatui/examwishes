@@ -25,8 +25,8 @@ class Order(models.Model):
     message = models.TextField(blank=True)
     photo = models.URLField(blank=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PENDING)
-    sender = models.ForeignKey(Customer, related_name="ordered")
-    receiver = models.ForeignKey(Customer, related_name="received")
+    sender = models.ForeignKey(User, related_name="ordered")
+    receiver = models.ForeignKey(User, related_name="received")
     #productnya ilang
     #boleh ditambah order date
     def __unicode__(self):
@@ -47,7 +47,7 @@ class Shop(models.Model):
     identifier = models.CharField(max_length=255, blank=False, unique=True)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=CLOSE)
-    admin = models.ForeignKey(Customer, related_name="shop", blank=True)
+    admin = models.ForeignKey(User, related_name="shop", blank=True)
 
     def __unicode__(self):
         return self.name
