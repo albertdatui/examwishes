@@ -1,9 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-#TODO: shop status
 
-class Customer(models.Model):
+class Client(models.Model):
     user = models.OneToOneField(
         User, primary_key=True, related_name="customer")
     address = models.CharField(max_length=255)
