@@ -12,3 +12,13 @@ class ShopSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Shop
 		fields = ('name', 'identifier', 'description', 'status', 'admin')
+
+class ProductSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Product
+		fields('id', 'name', 'description', 'videoURL', 'quantity', 'price', 'isPhotoRequired', 'shop')
+
+class ImageSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Image
+		fields('id', 'name', 'image', 'product')

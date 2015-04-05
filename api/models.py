@@ -28,7 +28,7 @@ class Order(models.Model):
     sender = models.ForeignKey(Customer, related_name="ordered")
     receiver = models.ForeignKey(Customer, related_name="received")
     #productnya ilang
-
+    #boleh ditambah order date
     def __unicode__(self):
         return self.pk
 
@@ -48,6 +48,27 @@ class Shop(models.Model):
     description = models.TextField(blank=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=CLOSE)
     admin = models.ForeignKey(Customer, related_name="shop", blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+class Product(models.Model):
+    name = models.CharField(max_length=255, blank=False)
+    description = models.TextField(blank=True, max_length=255)
+    #??image = models.ImageField(height_field=None, width_field=None, max_length=255) #Alternative: FilePathField or URLField?
+    videoURL = models.URLField(blank=True)
+    quantity = models.PositiveSmallIntegerField(default=0)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    isPhotoRequired = models.BooleanField(default=False)
+    shop = models.ForeignKey(Shop, related_name="product")
+
+    def __unicode__(self):
+        return self.name
+
+class Image(models.Model):
+    name = models.CharField(max_length=255, blank=False)
+    image = models.ImageField(height_field=900, width_field=900, max_length=255) #Alternative: FilePathField or URLField?
+    product = models.ForeignKey(Product, related_name="productImage")
 
     def __unicode__(self):
         return self.name
