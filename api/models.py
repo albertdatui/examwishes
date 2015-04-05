@@ -28,6 +28,7 @@ class Order(models.Model):
     sender = models.ForeignKey(User, related_name="ordered")
     receiver = models.ForeignKey(User, related_name="received")
     product = models.ForeignKey(Product, related_name="order")
+    date = models.DateField(auto_now=True)
 
     def __unicode__(self):
         return self.pk
