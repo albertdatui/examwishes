@@ -36,6 +36,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 		model = Order
 		fields = (
 			'id',
+			'alias',
 			'message',
 			'photo',
 			'status',
@@ -52,6 +53,7 @@ class ShopSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Shop
 		fields = (
+			'id',
 			'name',
 			'identifier',
 			'description',

@@ -22,6 +22,7 @@ class Order(models.Model):
         (PAID, 'Paid'),
 
     )
+    alias = models.CharField(max_length=255)
     message = models.TextField(blank=True)
     photo = models.URLField(blank=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PENDING)
