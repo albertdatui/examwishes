@@ -4,14 +4,16 @@ from api.models import *
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-	address = serializers.URLField(source='client.address')
-	phone = serializers.URLField(source='client.phone')
+	address = serializers.CharField(source='client.address')
+	phone = serializers.CharField(source='client.phone')
 
 	class Meta:
 		model = User
 		fields = (
 			'id',
-			'name',
+			'username',
+			'first_name',
+			'last_name',
 			'address',
 			'phone',
 			'email',
@@ -22,13 +24,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 		write_only_fields = ('password',)
 
 	def create(self, validated_data):
-        client = Client.objects.create(**validated_data.get('client'))
-        # must remove the client data before creating user
-        del validated_data['client']
-        user = User.objects.create_user(**validated_data)
+		client = Client.objects.create(**validated_data.get('client'))
+		# must remove the client data before creating user
+		del validated_data['client']
+		user = User.objects.create_user(**validated_data)
         # establish the relationship
-        client.user = user
-        return user
+		client.user = user
+		return user
 
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
@@ -49,7 +51,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 
 class ShopSerializer(serializers.HyperlinkedModelSerializer):
 	product = serializers.HyperlinkedRelatedField(many=True, view_name='product-detail',read_only=True)
-	manager = serializers.HyperlinkedRelatedField(many=True, view_name='user-detail')
+	manager = serializers.HyperlinkedRelatedField(many=True, view_name='user-detail', read_only=True)
 
 	class Meta:
 		model = Shop
@@ -68,10 +70,10 @@ class ShopSerializer(serializers.HyperlinkedModelSerializer):
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Product
-		fields('id', 'name', 'description', 'videoURL', 'quantity', 'price', 'isPhotoRequired', 'shop')
+		fields = ('id', 'name', 'description', 'videoURL', 'quantity', 'price', 'isPhotoRequired', 'shop')
 
 
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Image
-		fields('id', 'name', 'image', 'product')
+		fields = ('id', 'name', 'image', 'product')

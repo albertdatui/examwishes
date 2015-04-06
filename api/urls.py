@@ -11,4 +11,16 @@ router.register(
     base_name='user'
 )
 
+router.register(
+	r'shop',
+	ShopViewSet,
+	base_name='shop'
+)
+
+router.register(
+	r'order',
+	OrderViewSet,
+	base_name='order'
+)
+
 urlpatterns = router.urls
