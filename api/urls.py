@@ -23,4 +23,13 @@ router.register(
 	base_name='order'
 )
 
-urlpatterns = router.urls
+router.register(
+	r'group',
+	GroupViewSet,
+	base_name='group'
+)
+
+urlpatterns = [
+	url(r'^', include(router.urls)),
+	url(r'^permission/(?P<pk>\d+)/$', PermissionDetail.as_view(), name='permission-detail'),
+]

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from api.models import *
 from api.serializers import *
@@ -36,3 +37,17 @@ class OrderViewSet(ModelViewSet):
 			return Order.objects.all()
 		else:
 			return Order.objects.filter(sender = self.request.user)
+
+class GroupViewSet(ModelViewSet):
+	serializer_class = GroupSerializer
+	model = Group
+
+	def get_queryset(self):
+		if self.request.user.is_superuser or settings.DEBUG:
+			return Group.objects.all()
+		else:
+			return Group.objects.filter(sender = self.request.user)
+
+class PermissionDetail(generics.RetrieveAPIView):
+	queryset = Permission.objects.all()
+	serializer_class = PermissionSerializer

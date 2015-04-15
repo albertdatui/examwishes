@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from api.models import *
 
 
@@ -18,7 +18,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 			'phone',
 			'email',
 			'password',
-			'groups',
 		)
 
 		write_only_fields = ('password',)
@@ -67,10 +66,20 @@ class ShopSerializer(serializers.HyperlinkedModelSerializer):
 		)
 
 
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Group
+
+
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Product
 		fields = ('id', 'name', 'description', 'videoURL', 'quantity', 'price', 'isPhotoRequired', 'shop')
+
+
+class PermissionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Permission
 
 
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
