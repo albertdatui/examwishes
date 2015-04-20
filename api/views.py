@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render_to_response, redirect, render
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
+from templates import *
 from api.models import *
 from api.serializers import *
 from django.conf import settings
@@ -51,3 +54,15 @@ class GroupViewSet(ModelViewSet):
 class PermissionDetail(generics.RetrieveAPIView):
 	queryset = Permission.objects.all()
 	serializer_class = PermissionSerializer
+
+
+def login(request):
+    # context = RequestContext(request, {
+    #     'request': request, 'user': request.user})
+    # return render_to_response('login.html', context_instance=context)
+    return render(request, 'login.html')
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('/api/login/')

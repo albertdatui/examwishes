@@ -33,4 +33,6 @@ urlpatterns = [
 	url(r'^', include(router.urls)),
 	url(r'^permission/(?P<pk>\d+)/$', PermissionDetail.as_view(), name='permission-detail'),
     url('', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^login/$', 'api.views.login'),
+    url(r'^logout/$', 'api.views.logout'),
 ]
